@@ -17,7 +17,7 @@ export default function OneOurCoffee() {
 
   useEffect(() => {
     const fetchOneCoffee = () => {
-      fetch(`http://localhost:4000/coffee/${paramsId}`)
+      fetch(`http://lo calhost:4000/coffee/${paramsId}`)
         .then((response) => response.json())
         .then((result) => {
           setOneCoffeeData({ ...result });

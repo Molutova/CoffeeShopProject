@@ -1,14 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CardImg from "../components/CardImg";
 import GirlCoffee from "../img/MaskGroup.png";
 import DataBase from "../db.json";
 import Products from "../components/Products";
+import accountContext from "../context/Account/AccountContext";
+import languageContext from "../context/Language/languageContext";
+import {
+  CHANGE_LANGUAGE,
+  DECREMENT,
+  DIVIDE,
+  INCREMENT,
+  MULTY,
+} from "../context/types";
 
 export default function OurCoffee() {
+  const allAccountData = useContext(accountContext);
+  const allLanguageData = useContext(languageContext);
   const [countryArray, setCountryArray] = useState([]);
   const [searchValue, setsearchValue] = useState("");
   const [fetchingData, setfetchingData] = useState([]);
+
   const [loading, setloading] = useState(true);
+
+  console.log(allAccountData);
+  console.log(allLanguageData);
 
   useEffect(() => {
     setloading(true);
@@ -42,6 +57,62 @@ export default function OurCoffee() {
   } else {
     return (
       <div>
+        <p>Our dispatch value: {allAccountData.state.count}</p>
+        <button
+          onClick={() => {
+            allAccountData.dispatch({ type: INCREMENT, Nailya: 1000 });
+          }}
+        >
+          +
+        </button>
+        <button
+          onClick={() => {
+            allAccountData.dispatch({ type: DECREMENT, payload: 200 });
+          }}
+        >
+          -
+        </button>
+        <button
+          onClick={() => {
+            allAccountData.dispatch({ type: MULTY, payload: 100 });
+          }}
+        >
+          *
+        </button>
+        <button
+          onClick={() => {
+            allAccountData.dispatch({ type: DIVIDE, payload: 50 });
+          }}
+        >
+          /
+        </button>
+        {/* <p>
+          {allAccountData.state.lg === "EN"
+            ? "Hello to our coffee place"
+            : "Closed"}
+        </p> */}
+        <p>{allAccountData.state.lg}</p>
+        <button
+          onClick={() => {
+            allAccountData.dispatch({ type: CHANGE_LANGUAGE, payload: "EN" });
+          }}
+        >
+          English
+        </button>
+        <button
+          onClick={() => {
+            allAccountData.dispatch({ type: CHANGE_LANGUAGE, payload: "RU" });
+          }}
+        >
+          Russian
+        </button>
+        <button
+          onClick={() => {
+            allAccountData.dispatch({ type: CHANGE_LANGUAGE, payload: "KZ" });
+          }}
+        >
+          Kazakh
+        </button>
         <CardImg
           title={"About Our Beans"}
           description={`Extremity sweetness difficult behaviour he of. On disposal of as landlord horrible.
@@ -53,6 +124,22 @@ met spot shy want. Children me laughing we prospect answered followed. At it wen
 is song that held help face.`}
           photo={GirlCoffee}
         ></CardImg>
+        <h1> My Account bill is : {allAccountData[0]}</h1>
+        <button
+          onClick={() => {
+            allAccountData[1](allAccountData[0] + 100);
+          }}
+        >
+          +
+        </button>
+        <h1> My second account is : {allAccountData[2]}</h1>
+        <button
+          onClick={() => {
+            allAccountData[3](allAccountData[2] + 200);
+          }}
+        >
+          +++
+        </button>
         <input
           value={searchValue}
           onChange={(e) => {
@@ -85,7 +172,6 @@ is song that held help face.`}
         >
           Columbia
         </button>
-
         {
           countryArray.length === 0 ? (
             searchValue.length == "" ? (

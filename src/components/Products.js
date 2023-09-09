@@ -21,11 +21,13 @@ export default function Products({ dataToRender }) {
           );
         } else {
           return (
-            <ProductItem
-              title={Coffee.name}
-              price={Coffee.price}
-              url={Coffee.url}
-            ></ProductItem>
+            <Link to={`/foryourpleasure/${Coffee.id}`}>
+              <ProductItem
+                title={Coffee.name}
+                price={Coffee.price}
+                url={Coffee.url}
+              ></ProductItem>
+            </Link>
           );
         }
       })}
